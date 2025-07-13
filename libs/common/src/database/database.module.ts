@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { MongooseModule } from '@nestjs/mongoose';
+import { ModelDefinition, MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@app/common/config';
+import mongoose from 'mongoose';
 
 @Module({
     imports: [
@@ -9,11 +10,15 @@ import { ConfigModule } from '@app/common/config';
             imports: [ConfigModule],
             useFactory: (configService: ConfigService) => {
                 return {
-                    uri: configService.get<string>('MONGODB_URI')
+                    uri: configService.get<string>('MONGODB_URI'),
                 };
             },
             inject: [ConfigService],
         }),
     ],
 })
-export class DatabaseModule {}
+export class DatabaseModule {
+    static forFeature(models: ModelDefinition[]) {
+        return MongooseModule.forFeature(models);
+    }
+}

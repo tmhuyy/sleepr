@@ -11,8 +11,8 @@ import * as Joi from 'joi';
             isGlobal: true, // Makes ConfigService available globally
             envFilePath: '.env', // Path to your .env file,
             validationSchema: Joi.object({
-                MONGODB_URI: Joi.string().required()
-            })
+                MONGODB_URI: Joi.string().required(),
+            }),
         }),
     ],
     providers: [ConfigService],
