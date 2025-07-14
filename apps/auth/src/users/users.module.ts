@@ -14,7 +14,6 @@ import { UserDocument, UserSchema } from './models/user.schema';
                 schema: UserSchema,
             },
         ]),
-        LoggerModule,
     ],
     controllers: [UsersController],
     providers: [UsersService, UserRepository],

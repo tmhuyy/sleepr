@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { ReservationsModule } from './reservations.module';
 import { Logger } from 'nestjs-pino';
 import { ValidationPipe } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
     const app = await NestFactory.create(ReservationsModule);
@@ -10,7 +11,7 @@ async function bootstrap() {
 
     /// logger service by Pino
     app.useLogger(app.get(Logger));
-
-    await app.listen(process.env.port ?? 3000);
+    const configService = app.get(ConfigService);
+    await app.listen(configService.get<string>('RESERVATION_PORT'));
 }
 bootstrap();
